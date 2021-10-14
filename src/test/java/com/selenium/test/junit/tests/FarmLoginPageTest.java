@@ -52,21 +52,10 @@ public class FarmLoginPageTest extends BaseTest {
         System.out.println("Login Page is Opened");
     }
 
-
     @Test
     public void testPasswordFieldType() {
         assertEquals(objFarmLoginPage.getExceptedPasswordType(), objFarmLoginPage.getTbPassword().getAttribute("type"));
         System.out.println("Password field is masked");
-    }
-
-
-    @Test
-    public void testWithPasswordContainsSpace() throws InterruptedException {
-        objFarmLoginPage.getTbEmail().sendKeys("mos.hovhannisyan@gmail.com");
-        objFarmLoginPage.getTbPassword().sendKeys("     642508 ");
-        objFarmLoginPage.getBtnLogin().click();
-        driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
-        assertEquals(objFarmLoginPage.getExceptedValidationMessage(), objFarmLoginPage.getValidationMessage().getText());
     }
 
     @Test
@@ -87,6 +76,15 @@ public class FarmLoginPageTest extends BaseTest {
         Thread.sleep(2000);
         assertEquals(objFarmForgotPasswordPage.getExceptedForgotPasswordUrl(), driver.getCurrentUrl());
         assertTrue(objFarmForgotPasswordPage.getTbEmail().isDisplayed());
+    }
+
+    @Test
+    public void testLoginPageSignUpBtn() throws InterruptedException {
+        objFarmLoginPage.getBtnSignUp().click();
+//     driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
+        Thread.sleep(2000);
+        assertEquals("https://farmtogether.com/signup", driver.getCurrentUrl());
+        System.out.println("SignUp button works correct");
     }
 
     @Test
@@ -114,6 +112,15 @@ public class FarmLoginPageTest extends BaseTest {
         assertEquals(objFarmLoginPage.getExceptedPasswordHelper(), objFarmLoginPage.getTextPasswordHelper().getText());
         System.out.println("System doesn't let Login with empty Email and empty Password fields and shows validation messages /"
                 + objFarmLoginPage.getExceptedEmailHelper() + "/" + " and /" + objFarmLoginPage.getExceptedPasswordHelper() + "/");
+    }
+
+    @Test
+    public void testWithPasswordContainsSpace() throws InterruptedException {
+        objFarmLoginPage.getTbEmail().sendKeys("mos.hovhannisyan@gmail.com");
+        objFarmLoginPage.getTbPassword().sendKeys("     642508 ");
+        objFarmLoginPage.getBtnLogin().click();
+        driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
+        assertEquals(objFarmLoginPage.getExceptedValidationMessage(), objFarmLoginPage.getValidationMessage().getText());
     }
 
     @Test
@@ -163,14 +170,7 @@ public class FarmLoginPageTest extends BaseTest {
         System.out.println("System doesn't let Login with password in email field and vice versa");
     }
 
-    @Test
-    public void testLoginPageSignUpBtn() throws InterruptedException {
-        objFarmLoginPage.getBtnSignUp().click();
-//     driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
-        Thread.sleep(2000);
-        assertEquals("https://farmtogether.com/signup", driver.getCurrentUrl());
-        System.out.println("SignUp button works correct");
-    }
+
 
     @Test
     public void testFailureFindElement() {
